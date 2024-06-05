@@ -139,7 +139,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: %{?scl_prefix}php
 Version: 5.6.40
-Release: 40%{?dist}
+Release: 41%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -261,6 +261,7 @@ Patch264: php-cve-2023-3823.patch
 Patch265: php-cve-2023-3824.patch
 Patch266: php-cve-2024-2756.patch
 Patch267: php-cve-2024-3096.patch
+Patch268: php-cve-2024-5458.patch
 
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
@@ -930,7 +931,11 @@ Group: System Environment/Libraries
 License: PHP
 Requires: %{?scl_prefix}php-common%{?_isa} = %{version}-%{release}
 # Upstream requires 4.0, we require 69.1 to ensure use of libicu69
+%if 0%{?rhel}
 BuildRequires: libicu-devel = 69.1
+%else
+BuildRequires: libicu-devel
+%endif
 
 %description intl
 The %{?scl_prefix}php-intl package contains a dynamic shared object that will add
@@ -1055,6 +1060,7 @@ sed -e 's/php-devel/%{?scl_prefix}php-devel/' -i scripts/phpize.in
 %patch -P265 -p1 -b .cve3824
 %patch -P266 -p1 -b .cve2756
 %patch -P267 -p1 -b .cve3096
+%patch -P268 -p1 -b .cve5458
 
 # Fixes for tests
 %patch -P300 -p1 -b .datetests
@@ -2005,6 +2011,10 @@ EOF
 
 
 %changelog
+* Tue Jun  4 2024 Remi Collet <remi@remirepo.net> - 5.6.40-41
+- Fix filter bypass in filter_var FILTER_VALIDATE_URL
+  CVE-2024-5458
+
 * Wed Apr 10 2024 Remi Collet <remi@remirepo.net> - 5.6.40-40
 - use oracle client library version 21.13
 - Fix __Host-/__Secure- cookie bypass due to partial CVE-2022-31629 fix
