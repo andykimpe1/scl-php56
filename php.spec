@@ -60,13 +60,15 @@
 %global mysql_sock %(mysql_config --socket  2>/dev/null || echo /var/lib/mysql/mysql.sock)
 
 %ifarch aarch64
-%global oraclever 19.19
+%global oraclever 19.23
+%global oraclemax 20
 %global oraclelib 19.1
-%global oracledir 19.19
+%global oracledir 19.23
 %else
-%global oraclever 21.13
-%global oraclelib 21.1
-%global oracledir 21
+%global oraclever 23.5
+%global oraclemax 24
+%global oraclelib 23.1
+%global oracledir 23
 %endif
 
 # Build for LiteSpeed Web Server (LSAPI)
@@ -139,7 +141,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: %{?scl_prefix}php
 Version: 5.6.40
-Release: 41%{?dist}
+Release: 42%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -703,7 +705,7 @@ BuildRequires:  oracle-instantclient%{oraclever}-devel
 Requires:       libclntsh.so.%{oraclelib}
 AutoReq:        0
 %else
-BuildRequires:  oracle-instantclient-devel >= %{oraclever}
+BuildRequires: (oracle-instantclient-devel >= %{oraclever} with oracle-instantclient-devel < %{oraclemax})
 %endif
 Requires:       %{?scl_prefix}php-pdo%{?_isa} = %{version}-%{release}
 Provides:       %{?scl_prefix}php_database
@@ -2011,6 +2013,9 @@ EOF
 
 
 %changelog
+* Wed Jul 31 2024 Remi Collet <remi@remirepo.net> - 5.6.40-42
+- use oracle client library version 23.5 on x86_64
+
 * Tue Jun  4 2024 Remi Collet <remi@remirepo.net> - 5.6.40-41
 - Fix filter bypass in filter_var FILTER_VALIDATE_URL
   CVE-2024-5458
