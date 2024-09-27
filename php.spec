@@ -60,10 +60,10 @@
 %global mysql_sock %(mysql_config --socket  2>/dev/null || echo /var/lib/mysql/mysql.sock)
 
 %ifarch aarch64
-%global oraclever 19.23
+%global oraclever 19.24
 %global oraclemax 20
 %global oraclelib 19.1
-%global oracledir 19.23
+%global oracledir 19.24
 %else
 %global oraclever 23.5
 %global oraclemax 24
@@ -141,7 +141,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: %{?scl_prefix}php
 Version: 5.6.40
-Release: 42%{?dist}
+Release: 43%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -264,6 +264,9 @@ Patch265: php-cve-2023-3824.patch
 Patch266: php-cve-2024-2756.patch
 Patch267: php-cve-2024-3096.patch
 Patch268: php-cve-2024-5458.patch
+Patch269: php-cve-2024-8925.patch
+Patch270: php-cve-2024-8926.patch
+Patch271: php-cve-2024-8927.patch
 
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
@@ -1063,6 +1066,9 @@ sed -e 's/php-devel/%{?scl_prefix}php-devel/' -i scripts/phpize.in
 %patch -P266 -p1 -b .cve2756
 %patch -P267 -p1 -b .cve3096
 %patch -P268 -p1 -b .cve5458
+%patch -P269 -p1 -b .cve8925
+%patch -P270 -p1 -b .cve8926
+%patch -P271 -p1 -b .cve8927
 
 # Fixes for tests
 %patch -P300 -p1 -b .datetests
@@ -2013,6 +2019,16 @@ EOF
 
 
 %changelog
+* Thu Sep 26 2024 Remi Collet <remi@remirepo.net> - 5.6.40-43
+- Fix Bypass of CVE-2012-1823, Argument Injection in PHP-CGI
+  CVE-2024-4577
+- Fix Bypass of CVE-2024-4577, Parameter Injection Vulnerability
+  CVE-2024-8926
+- Fix cgi.force_redirect configuration is bypassable due to the environment variable collision
+  CVE-2024-8927
+- Fix Erroneous parsing of multipart form data
+  CVE-2024-8925
+
 * Wed Jul 31 2024 Remi Collet <remi@remirepo.net> - 5.6.40-42
 - use oracle client library version 23.5 on x86_64
 
