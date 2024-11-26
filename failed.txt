@@ -1,8 +1,8 @@
-===== 5.6.40-43 (2024-09-27)
+===== 5.6.40-44 (2024-11-26)
 
 $ grep -r 'Tests failed' /var/lib/mock/scl56*/build.log
 
-/var/lib/mock/scl56el8x/build.log:Tests failed    :    35
+/var/lib/mock/scl56el8x/build.log:Tests failed    :    36
 
 
 el8x:

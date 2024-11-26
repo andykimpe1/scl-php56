@@ -65,7 +65,7 @@
 %global oraclelib 19.1
 %global oracledir 19.24
 %else
-%global oraclever 23.5
+%global oraclever 23.6
 %global oraclemax 24
 %global oraclelib 23.1
 %global oracledir 23
@@ -141,7 +141,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: %{?scl_prefix}php
 Version: 5.6.40
-Release: 43%{?dist}
+Release: 44%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -267,6 +267,10 @@ Patch268: php-cve-2024-5458.patch
 Patch269: php-cve-2024-8925.patch
 Patch270: php-cve-2024-8926.patch
 Patch271: php-cve-2024-8927.patch
+Patch273: php-cve-2024-11234.patch
+Patch274: php-cve-2024-8932.patch
+Patch275: php-cve-2024-11233.patch
+Patch276: php-ghsa-4w77-75f9-2c8w.patch
 
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
@@ -1069,6 +1073,10 @@ sed -e 's/php-devel/%{?scl_prefix}php-devel/' -i scripts/phpize.in
 %patch -P269 -p1 -b .cve8925
 %patch -P270 -p1 -b .cve8926
 %patch -P271 -p1 -b .cve8927
+%patch -P273 -p1 -b .cve11234
+%patch -P274 -p1 -b .cve8932
+%patch -P275 -p1 -b .cve11233
+%patch -P276 -p1 -b .ghsa4w77
 
 # Fixes for tests
 %patch -P300 -p1 -b .datetests
@@ -2019,6 +2027,16 @@ EOF
 
 
 %changelog
+* Tue Nov 26 2024 Remi Collet <remi@remirepo.net> - 5.6.40-44
+- Fix Heap-Use-After-Free in sapi_read_post_data Processing in CLI SAPI Interface
+  GHSA-4w77-75f9-2c8w
+- Fix OOB access in ldap_escape
+  CVE-2024-8932
+- Fix Configuring a proxy in a stream context might allow for CRLF injection in URIs
+  CVE-2024-11234
+- Fix Single byte overread with convert.quoted-printable-decode filter
+  CVE-2024-11233
+
 * Thu Sep 26 2024 Remi Collet <remi@remirepo.net> - 5.6.40-43
 - Fix Bypass of CVE-2012-1823, Argument Injection in PHP-CGI
   CVE-2024-4577
