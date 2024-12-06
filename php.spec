@@ -141,7 +141,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: %{?scl_prefix}php
 Version: 5.6.40
-Release: 44%{?dist}
+Release: 45%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -202,6 +202,7 @@ Patch91: php-5.6.3-oci8conf.patch
 # Upstream fixes (100+)
 Patch100: php-5.6.31-oci.patch
 Patch103: php-bug76846.patch
+Patch104: php-mysqlnd-utf8mb4.patch
 
 # Security fixes (200+)
 # See https://github.com/Microsoft/php-src/commits/PHP-5.6-security-backports
@@ -1009,6 +1010,7 @@ sed -e 's/php-devel/%{?scl_prefix}php-devel/' -i scripts/phpize.in
 # upstream patches
 %patch -P100 -p1 -b .pdo_oci
 %patch -P103 -p1 -b .bug76846
+%patch -P104 -p1 -b .utf8mb4
 
 # security patches
 %patch -P208 -p1 -b .bug77396
@@ -2027,6 +2029,10 @@ EOF
 
 
 %changelog
+* Fri Dec  6 2024 Remi Collet <remi@remirepo.net> - 5.6.40-45
+- Add support for MySQL 8's Unicode types (utf8mb4)
+  https://github.com/remicollet/remirepo/issues/280
+
 * Tue Nov 26 2024 Remi Collet <remi@remirepo.net> - 5.6.40-44
 - Fix Heap-Use-After-Free in sapi_read_post_data Processing in CLI SAPI Interface
   GHSA-4w77-75f9-2c8w
