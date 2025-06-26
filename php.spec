@@ -281,6 +281,7 @@ Patch300: php-5.6.30-datetests.patch
 Patch301: php-5.6.0-oldpcre.patch
 # Renew openssl certs
 Patch302: php-openssl-cert.patch
+Patch303: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.40-openssl-3-support.patch
 
 # WIP
 
@@ -1090,6 +1091,7 @@ fi
 %endif
 # New openssl certs
 %patch -P302 -p1 -b .renewcert
+%patch -P303 -p1 -b .ssl3
 rm ext/openssl/tests/bug65538_003.phpt
 
 # WIP patch
