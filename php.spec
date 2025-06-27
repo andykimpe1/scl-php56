@@ -139,7 +139,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: %{?scl_prefix}php
 Version: 5.6.40
-Release: 41%{?dist}
+Release: 99%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -149,7 +149,7 @@ License: PHP and Zend and BSD and MIT and ASL 1.0
 Group: Development/Languages
 URL: http://www.php.net/
 
-Source0: https://www.php.net/distributions/php-%{version}%{?rcver}.tar.xz
+Source0: https://www.php.net/distributions/php-5.6.40.tar.xz
 Source1: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.conf
 Source2: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.ini
 Source3: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/macros.php
@@ -262,6 +262,7 @@ Patch265: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/mast
 Patch266: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-2756.patch
 Patch267: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-3096.patch
 Patch268: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-5458.patch
+
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
 # Relax some tests with erratic results with system tzdata
@@ -270,7 +271,6 @@ Patch300: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/mast
 Patch301: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.0-oldpcre.patch
 # Renew openssl certs
 Patch302: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-openssl-cert.patch
-#Patch303: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.40-openssl-3-support.patch
 
 # WIP
 
