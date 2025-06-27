@@ -60,13 +60,15 @@
 %global mysql_sock %(mysql_config --socket  2>/dev/null || echo /var/lib/mysql/mysql.sock)
 
 %ifarch aarch64
-%global oraclever 19.19
+%global oraclever 19.24
+%global oraclemax 20
 %global oraclelib 19.1
-%global oracledir 19.19
+%global oracledir 19.24
 %else
-%global oraclever 21.13
-%global oraclelib 21.1
-%global oracledir 21
+%global oraclever 23.6
+%global oraclemax 24
+%global oraclelib 23.1
+%global oracledir 23
 %endif
 
 # Build for LiteSpeed Web Server (LSAPI)
@@ -139,7 +141,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: %{?scl_prefix}php
 Version: 5.6.40
-Release: 41%{?dist}
+Release: 45%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -149,23 +151,23 @@ License: PHP and Zend and BSD and MIT and ASL 1.0
 Group: Development/Languages
 URL: http://www.php.net/
 
-Source0: php-%{version}%{?rcver}-strip.tar.xz
-Source1: php.conf
-Source2: php.ini
-Source3: macros.php
-Source4: php-fpm.conf
-Source5: php-fpm-www.conf
-Source6: php-fpm.service
-Source7: php-fpm.logrotate
-Source8: php-fpm.sysconfig
-Source9: php.modconf
-Source10: php.conf2
-Source11: php-fpm.init
-Source12: php-fpm.wants
-Source13: strip.sh
+Source0: https://www.php.net/distributions/php-5.6.40.tar.gz
+Source1: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.conf
+Source2: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.ini
+Source3: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/macros.php
+Source4: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.conf
+Source5: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm-www.conf
+Source6: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.service
+Source7: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.logrotate
+Source8: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.sysconfig
+Source9: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.modconf
+Source10: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.conf2
+Source11: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.init
+Source12: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.wants
+Source13: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/strip.sh
 # Configuration files for some extensions
-Source50: opcache.ini
-Source51: opcache-default.blacklist
+Source50: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/opcache.ini
+Source51: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/opcache-default.blacklist
 
 # Build fixes
 Patch1: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-7.1.7-httpd.patch
@@ -200,6 +202,7 @@ Patch91: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/maste
 # Upstream fixes (100+)
 Patch100: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.31-oci.patch
 Patch103: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug76846.patch
+Patch104: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-mysqlnd-utf8mb4.patch
 
 # Security fixes (200+)
 # See https://github.com/Microsoft/php-src/commits/PHP-5.6-security-backports
@@ -262,6 +265,14 @@ Patch265: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/mast
 Patch266: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-2756.patch
 Patch267: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-3096.patch
 Patch268: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-5458.patch
+Patch269: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-8925.patch
+Patch270: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-8926.patch
+Patch271: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-8927.patch
+Patch273: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-11234.patch
+Patch274: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-8932.patch
+Patch275: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-11233.patch
+Patch276: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-ghsa-4w77-75f9-2c8w.patch
+
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
 # Relax some tests with erratic results with system tzdata
@@ -703,7 +714,7 @@ BuildRequires:  oracle-instantclient%{oraclever}-devel
 Requires:       libclntsh.so.%{oraclelib}
 AutoReq:        0
 %else
-BuildRequires:  oracle-instantclient-devel >= %{oraclever}
+BuildRequires: (oracle-instantclient-devel >= %{oraclever} with oracle-instantclient-devel < %{oraclemax})
 %endif
 Requires:       %{?scl_prefix}php-pdo%{?_isa} = %{version}-%{release}
 Provides:       %{?scl_prefix}php_database
@@ -1000,6 +1011,7 @@ sed -e 's/php-devel/%{?scl_prefix}php-devel/' -i scripts/phpize.in
 # upstream patches
 %patch -P100 -p1 -b .pdo_oci
 %patch -P103 -p1 -b .bug76846
+%patch -P104 -p1 -b .utf8mb4
 
 # security patches
 %patch -P208 -p1 -b .bug77396
@@ -1061,6 +1073,13 @@ sed -e 's/php-devel/%{?scl_prefix}php-devel/' -i scripts/phpize.in
 %patch -P266 -p1 -b .cve2756
 %patch -P267 -p1 -b .cve3096
 %patch -P268 -p1 -b .cve5458
+%patch -P269 -p1 -b .cve8925
+%patch -P270 -p1 -b .cve8926
+%patch -P271 -p1 -b .cve8927
+%patch -P273 -p1 -b .cve11234
+%patch -P274 -p1 -b .cve8932
+%patch -P275 -p1 -b .cve11233
+%patch -P276 -p1 -b .ghsa4w77
 
 # Fixes for tests
 %patch -P300 -p1 -b .datetests
@@ -1072,6 +1091,7 @@ fi
 %endif
 # New openssl certs
 %patch -P302 -p1 -b .renewcert
+#%patch -P303 -p1 -b .ssl3
 rm ext/openssl/tests/bug65538_003.phpt
 
 # WIP patch
@@ -2011,6 +2031,33 @@ EOF
 
 
 %changelog
+* Fri Dec  6 2024 Remi Collet <remi@remirepo.net> - 5.6.40-45
+- Add support for MySQL 8's Unicode types (utf8mb4)
+  https://github.com/remicollet/remirepo/issues/280
+
+* Tue Nov 26 2024 Remi Collet <remi@remirepo.net> - 5.6.40-44
+- Fix Heap-Use-After-Free in sapi_read_post_data Processing in CLI SAPI Interface
+  GHSA-4w77-75f9-2c8w
+- Fix OOB access in ldap_escape
+  CVE-2024-8932
+- Fix Configuring a proxy in a stream context might allow for CRLF injection in URIs
+  CVE-2024-11234
+- Fix Single byte overread with convert.quoted-printable-decode filter
+  CVE-2024-11233
+
+* Thu Sep 26 2024 Remi Collet <remi@remirepo.net> - 5.6.40-43
+- Fix Bypass of CVE-2012-1823, Argument Injection in PHP-CGI
+  CVE-2024-4577
+- Fix Bypass of CVE-2024-4577, Parameter Injection Vulnerability
+  CVE-2024-8926
+- Fix cgi.force_redirect configuration is bypassable due to the environment variable collision
+  CVE-2024-8927
+- Fix Erroneous parsing of multipart form data
+  CVE-2024-8925
+
+* Wed Jul 31 2024 Remi Collet <remi@remirepo.net> - 5.6.40-42
+- use oracle client library version 23.5 on x86_64
+
 * Tue Jun  4 2024 Remi Collet <remi@remirepo.net> - 5.6.40-41
 - Fix filter bypass in filter_var FILTER_VALIDATE_URL
   CVE-2024-5458
