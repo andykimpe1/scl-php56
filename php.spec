@@ -141,7 +141,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: %{?scl_prefix}php
 Version: 5.6.40
-Release: 45%{?dist}
+Release: 46%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -281,7 +281,7 @@ Patch300: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/mast
 Patch301: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.0-oldpcre.patch
 # Renew openssl certs
 Patch302: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-openssl-cert.patch
-#Patch303: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.40-openssl-3-support.patch
+Patch303: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.40-openssl-3-support.patch
 
 # WIP
 
@@ -1091,7 +1091,7 @@ fi
 %endif
 # New openssl certs
 %patch -P302 -p1 -b .renewcert
-#%patch -P303 -p1 -b .ssl3
+%patch -P303 -p1 -b .ssl3
 rm ext/openssl/tests/bug65538_003.phpt
 
 # WIP patch
