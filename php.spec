@@ -149,23 +149,23 @@ License: PHP and Zend and BSD and MIT and ASL 1.0
 Group: Development/Languages
 URL: http://www.php.net/
 
-Source0: php-%{version}%{?rcver}-strip.tar.xz
-Source1: php.conf
-Source2: php.ini
-Source3: macros.php
-Source4: php-fpm.conf
-Source5: php-fpm-www.conf
-Source6: php-fpm.service
-Source7: php-fpm.logrotate
-Source8: php-fpm.sysconfig
-Source9: php.modconf
-Source10: php.conf2
-Source11: php-fpm.init
-Source12: php-fpm.wants
-Source13: strip.sh
+Source0: https://www.php.net/distributions/php-%{version}%{?rcver}.tar.xz
+Source1: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.conf
+Source2: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.ini
+Source3: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/macros.php
+Source4: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.conf
+Source5: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm-www.conf
+Source6: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.service
+Source7: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.logrotate
+Source8: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.sysconfig
+Source9: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.modconf
+Source10: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.conf2
+Source11: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.init
+Source12: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.wants
+Source13: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/strip.sh
 # Configuration files for some extensions
-Source50: opcache.ini
-Source51: opcache-default.blacklist
+Source50: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/opcache.ini
+Source51: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/opcache-default.blacklist
 
 # Build fixes
 Patch1: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-7.1.7-httpd.patch
