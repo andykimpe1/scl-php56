@@ -60,15 +60,13 @@
 %global mysql_sock %(mysql_config --socket  2>/dev/null || echo /var/lib/mysql/mysql.sock)
 
 %ifarch aarch64
-%global oraclever 19.24
-%global oraclemax 20
+%global oraclever 19.19
 %global oraclelib 19.1
-%global oracledir 19.24
+%global oracledir 19.19
 %else
-%global oraclever 23.6
-%global oraclemax 24
-%global oraclelib 23.1
-%global oracledir 23
+%global oraclever 21.13
+%global oraclelib 21.1
+%global oracledir 21
 %endif
 
 # Build for LiteSpeed Web Server (LSAPI)
@@ -141,7 +139,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: %{?scl_prefix}php
 Version: 5.6.40
-Release: 46%{?dist}
+Release: 41%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -151,137 +149,128 @@ License: PHP and Zend and BSD and MIT and ASL 1.0
 Group: Development/Languages
 URL: http://www.php.net/
 
-Source0: https://www.php.net/distributions/php-5.6.40.tar.gz
-Source1: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.conf
-Source2: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.ini
-Source3: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/macros.php
-Source4: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.conf
-Source5: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm-www.conf
-Source6: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.service
-Source7: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.logrotate
-Source8: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.sysconfig
-Source9: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.modconf
-Source10: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php.conf2
-Source11: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.init
-Source12: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-fpm.wants
-Source13: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/strip.sh
+Source0: php-%{version}%{?rcver}-strip.tar.xz
+Source1: php.conf
+Source2: php.ini
+Source3: macros.php
+Source4: php-fpm.conf
+Source5: php-fpm-www.conf
+Source6: php-fpm.service
+Source7: php-fpm.logrotate
+Source8: php-fpm.sysconfig
+Source9: php.modconf
+Source10: php.conf2
+Source11: php-fpm.init
+Source12: php-fpm.wants
+Source13: strip.sh
 # Configuration files for some extensions
-Source50: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/opcache.ini
-Source51: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/opcache-default.blacklist
+Source50: opcache.ini
+Source51: opcache-default.blacklist
 
 # Build fixes
-Patch1: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-7.1.7-httpd.patch
-Patch2: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.30-interbase.patch
-Patch3: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.31-openssl11.patch
-Patch5: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.3-includedir.patch
-Patch6: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.3-embed.patch
-Patch7: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.3.0-recode.patch
-Patch8: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.17-libdb.patch
-Patch9: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.5.30-curl.patch
-Patch10: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.37-icu62.patch
-Patch11: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.40-gcc10.patch
+Patch1: php-7.1.7-httpd.patch
+Patch2: php-5.6.30-interbase.patch
+Patch3: php-5.6.31-openssl11.patch
+Patch5: php-5.6.3-includedir.patch
+Patch6: php-5.6.3-embed.patch
+Patch7: php-5.3.0-recode.patch
+Patch8: php-5.6.17-libdb.patch
+Patch9: php-5.5.30-curl.patch
+Patch10: php-5.6.37-icu62.patch
+Patch11: php-5.6.40-gcc10.patch
 # backported from 8.0
-Patch12: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-net-snmp.patch
+Patch12: php-net-snmp.patch
 
 # Functional changes
-Patch40: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.4.0-dlopen.patch
-Patch41: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.30-dtrace.patch
-Patch42: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.13-systzdata-v12.patch
+Patch40: php-5.4.0-dlopen.patch
+Patch41: php-5.6.30-dtrace.patch
+Patch42: php-5.6.13-systzdata-v12.patch
 # See http://bugs.php.net/53436
-Patch43: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.4.0-phpize.patch
+Patch43: php-5.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
-Patch45: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.3-ldap_r.patch
+Patch45: php-5.6.3-ldap_r.patch
 # Make php_config.h constant across builds
-Patch46: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.3-fixheader.patch
+Patch46: php-5.6.3-fixheader.patch
 # drop "Configure command" from phpinfo output
-Patch47: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.3-phpinfo.patch
+Patch47: php-5.6.3-phpinfo.patch
 
 # RC Patch
-Patch91: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.3-oci8conf.patch
+Patch91: php-5.6.3-oci8conf.patch
 
 # Upstream fixes (100+)
-Patch100: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.31-oci.patch
-Patch103: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug76846.patch
-Patch104: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-mysqlnd-utf8mb4.patch
+Patch100: php-5.6.31-oci.patch
+Patch103: php-bug76846.patch
 
 # Security fixes (200+)
 # See https://github.com/Microsoft/php-src/commits/PHP-5.6-security-backports
-Patch208: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77396.patch
-Patch209: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77431.patch
-Patch210: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77540.patch
-Patch211: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77563.patch
-Patch212: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77586.patch
-Patch213: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77630.patch
-Patch214: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-news.patch
-Patch215: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-sqlite3-defensive.patch
-Patch216: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77753.patch
-Patch217: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77831.patch
-Patch218: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77950.patch
-Patch219: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78069.patch
-Patch220: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77988.patch
-Patch221: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77967.patch
-Patch222: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78222.patch
-Patch223: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78256.patch
-Patch224: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77919.patch
-Patch225: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug75457.patch
-Patch226: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78380.patch
-Patch227: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78599.patch
-Patch228: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78878.patch
-Patch229: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78862.patch
-Patch230: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78863.patch
-Patch231: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78793.patch
-Patch232: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78910.patch
-Patch233: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79099.patch
-Patch234: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79037.patch
-Patch236: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79221.patch
-Patch237: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79082.patch
-Patch238: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79282.patch
-Patch239: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79329.patch
-Patch240: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79330.patch
-Patch241: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79465.patch
-Patch242: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug78875.patch
-Patch243: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79797.patch
-Patch244: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79877.patch
-Patch246: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79699.patch
-Patch247: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug77423.patch
-Patch248: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug80672.patch
-Patch249: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug80710.patch
-Patch250: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug81122.patch
-Patch251: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug76450.patch
-Patch252: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug81211.patch
-Patch253: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug81026.patch
-Patch254: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug79971.patch
-Patch255: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug81719.patch
-Patch256: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug81720.patch
-Patch257: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug81727.patch
-Patch258: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug81726.patch
-Patch259: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug81740.patch
-Patch260: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug81744.patch
-Patch261: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-bug81746.patch
-Patch262: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2023-0662.patch
-Patch263: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2023-3247.patch
-Patch264: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2023-3823.patch
-Patch265: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2023-3824.patch
-Patch266: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-2756.patch
-Patch267: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-3096.patch
-Patch268: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-5458.patch
-Patch269: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-8925.patch
-Patch270: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-8926.patch
-Patch271: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-8927.patch
-Patch273: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-11234.patch
-Patch274: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-8932.patch
-Patch275: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-cve-2024-11233.patch
-Patch276: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-ghsa-4w77-75f9-2c8w.patch
+Patch208: php-bug77396.patch
+Patch209: php-bug77431.patch
+Patch210: php-bug77540.patch
+Patch211: php-bug77563.patch
+Patch212: php-bug77586.patch
+Patch213: php-bug77630.patch
+Patch214: php-news.patch
+Patch215: php-sqlite3-defensive.patch
+Patch216: php-bug77753.patch
+Patch217: php-bug77831.patch
+Patch218: php-bug77950.patch
+Patch219: php-bug78069.patch
+Patch220: php-bug77988.patch
+Patch221: php-bug77967.patch
+Patch222: php-bug78222.patch
+Patch223: php-bug78256.patch
+Patch224: php-bug77919.patch
+Patch225: php-bug75457.patch
+Patch226: php-bug78380.patch
+Patch227: php-bug78599.patch
+Patch228: php-bug78878.patch
+Patch229: php-bug78862.patch
+Patch230: php-bug78863.patch
+Patch231: php-bug78793.patch
+Patch232: php-bug78910.patch
+Patch233: php-bug79099.patch
+Patch234: php-bug79037.patch
+Patch236: php-bug79221.patch
+Patch237: php-bug79082.patch
+Patch238: php-bug79282.patch
+Patch239: php-bug79329.patch
+Patch240: php-bug79330.patch
+Patch241: php-bug79465.patch
+Patch242: php-bug78875.patch
+Patch243: php-bug79797.patch
+Patch244: php-bug79877.patch
+Patch246: php-bug79699.patch
+Patch247: php-bug77423.patch
+Patch248: php-bug80672.patch
+Patch249: php-bug80710.patch
+Patch250: php-bug81122.patch
+Patch251: php-bug76450.patch
+Patch252: php-bug81211.patch
+Patch253: php-bug81026.patch
+Patch254: php-bug79971.patch
+Patch255: php-bug81719.patch
+Patch256: php-bug81720.patch
+Patch257: php-bug81727.patch
+Patch258: php-bug81726.patch
+Patch259: php-bug81740.patch
+Patch260: php-bug81744.patch
+Patch261: php-bug81746.patch
+Patch262: php-cve-2023-0662.patch
+Patch263: php-cve-2023-3247.patch
+Patch264: php-cve-2023-3823.patch
+Patch265: php-cve-2023-3824.patch
+Patch266: php-cve-2024-2756.patch
+Patch267: php-cve-2024-3096.patch
+Patch268: php-cve-2024-5458.patch
 
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
 # Relax some tests with erratic results with system tzdata
-Patch300: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.30-datetests.patch
+Patch300: php-5.6.30-datetests.patch
 # Revert changes for pcre < 8.34
-Patch301: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.0-oldpcre.patch
+Patch301: php-5.6.0-oldpcre.patch
 # Renew openssl certs
-Patch302: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-openssl-cert.patch
-Patch303: https://raw.githubusercontent.com/andykimpe1/scl-php56/refs/heads/master/php-5.6.40-openssl-3-support.patch
+Patch302: php-openssl-cert.patch
 
 # WIP
 
@@ -714,7 +703,7 @@ BuildRequires:  oracle-instantclient%{oraclever}-devel
 Requires:       libclntsh.so.%{oraclelib}
 AutoReq:        0
 %else
-BuildRequires: (oracle-instantclient-devel >= %{oraclever} with oracle-instantclient-devel < %{oraclemax})
+BuildRequires:  oracle-instantclient-devel >= %{oraclever}
 %endif
 Requires:       %{?scl_prefix}php-pdo%{?_isa} = %{version}-%{release}
 Provides:       %{?scl_prefix}php_database
@@ -1011,7 +1000,6 @@ sed -e 's/php-devel/%{?scl_prefix}php-devel/' -i scripts/phpize.in
 # upstream patches
 %patch -P100 -p1 -b .pdo_oci
 %patch -P103 -p1 -b .bug76846
-%patch -P104 -p1 -b .utf8mb4
 
 # security patches
 %patch -P208 -p1 -b .bug77396
@@ -1073,13 +1061,6 @@ sed -e 's/php-devel/%{?scl_prefix}php-devel/' -i scripts/phpize.in
 %patch -P266 -p1 -b .cve2756
 %patch -P267 -p1 -b .cve3096
 %patch -P268 -p1 -b .cve5458
-%patch -P269 -p1 -b .cve8925
-%patch -P270 -p1 -b .cve8926
-%patch -P271 -p1 -b .cve8927
-%patch -P273 -p1 -b .cve11234
-%patch -P274 -p1 -b .cve8932
-%patch -P275 -p1 -b .cve11233
-%patch -P276 -p1 -b .ghsa4w77
 
 # Fixes for tests
 %patch -P300 -p1 -b .datetests
@@ -1091,7 +1072,6 @@ fi
 %endif
 # New openssl certs
 %patch -P302 -p1 -b .renewcert
-%patch -P303 -p1 -b .ssl3
 rm ext/openssl/tests/bug65538_003.phpt
 
 # WIP patch
@@ -2031,33 +2011,6 @@ EOF
 
 
 %changelog
-* Fri Dec  6 2024 Remi Collet <remi@remirepo.net> - 5.6.40-45
-- Add support for MySQL 8's Unicode types (utf8mb4)
-  https://github.com/remicollet/remirepo/issues/280
-
-* Tue Nov 26 2024 Remi Collet <remi@remirepo.net> - 5.6.40-44
-- Fix Heap-Use-After-Free in sapi_read_post_data Processing in CLI SAPI Interface
-  GHSA-4w77-75f9-2c8w
-- Fix OOB access in ldap_escape
-  CVE-2024-8932
-- Fix Configuring a proxy in a stream context might allow for CRLF injection in URIs
-  CVE-2024-11234
-- Fix Single byte overread with convert.quoted-printable-decode filter
-  CVE-2024-11233
-
-* Thu Sep 26 2024 Remi Collet <remi@remirepo.net> - 5.6.40-43
-- Fix Bypass of CVE-2012-1823, Argument Injection in PHP-CGI
-  CVE-2024-4577
-- Fix Bypass of CVE-2024-4577, Parameter Injection Vulnerability
-  CVE-2024-8926
-- Fix cgi.force_redirect configuration is bypassable due to the environment variable collision
-  CVE-2024-8927
-- Fix Erroneous parsing of multipart form data
-  CVE-2024-8925
-
-* Wed Jul 31 2024 Remi Collet <remi@remirepo.net> - 5.6.40-42
-- use oracle client library version 23.5 on x86_64
-
 * Tue Jun  4 2024 Remi Collet <remi@remirepo.net> - 5.6.40-41
 - Fix filter bypass in filter_var FILTER_VALIDATE_URL
   CVE-2024-5458
