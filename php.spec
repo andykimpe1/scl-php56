@@ -1091,7 +1091,7 @@ fi
 %endif
 # New openssl certs
 %patch -P302 -p1 -b .renewcert
-%patch -P303 -p1 -b .ssl3
+#%patch -P303 -p1 -b .ssl3
 rm ext/openssl/tests/bug65538_003.phpt
 
 # WIP patch
